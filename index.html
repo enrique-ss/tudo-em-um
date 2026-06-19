@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tudo-em-Um - Projetos CRUD</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                </div>
+                <div class="sidebar-title">
+                    <h1>Tudo-em-Um</h1>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-tab="calculator">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="16" y1="14" x2="16" y2="18"></line>
+                        <line x1="8" y1="14" x2="8" y2="18"></line>
+                        <line x1="12" y1="14" x2="12" y2="18"></line>
+                        <line x1="8" y1="10" x2="16" y2="10"></line>
+                    </svg>
+                    Calculadora
+                </button>
+                <button class="nav-btn" data-tab="converters">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 16V4M7 4L3 8M7 4L11 8"></path>
+                        <path d="M17 8V20M17 20L21 16M17 20L13 16"></path>
+                    </svg>
+                    Conversores
+                </button>
+                <button class="nav-btn" data-tab="todo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    To-Do List
+                </button>
+                <button class="nav-btn" data-tab="password">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Gerador de Senha
+                </button>
+                <button class="nav-btn" data-tab="units">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    Unidades
+                </button>
+                <button class="nav-btn" data-tab="stopwatch">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    Cronômetro
+                </button>
+                <button class="nav-btn" data-tab="notes">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Notas
+                </button>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <!-- Calculator Section -->
+            <section id="calculator" class="tab-content active">
+                <div class="calculator">
+                    <div class="calculator-display">
+                        <input type="text" id="calc-display" readonly value="0">
+                    </div>
+                    <div class="calculator-buttons">
+                        <button class="btn btn-clear" onclick="clearCalculator()">C</button>
+                        <button class="btn btn-operator" onclick="appendOperator('/')">/</button>
+                        <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
+                        <button class="btn btn-backspace" onclick="backspace()">⌫</button>
+                        
+                        <button class="btn btn-number" onclick="appendNumber('7')">7</button>
+                        <button class="btn btn-number" onclick="appendNumber('8')">8</button>
+                        <button class="btn btn-number" onclick="appendNumber('9')">9</button>
+                        <button class="btn btn-operator" onclick="appendOperator('-')">−</button>
+                        
+                        <button class="btn btn-number" onclick="appendNumber('4')">4</button>
+                        <button class="btn btn-number" onclick="appendNumber('5')">5</button>
+                        <button class="btn btn-number" onclick="appendNumber('6')">6</button>
+                        <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
+                        
+                        <button class="btn btn-number" onclick="appendNumber('1')">1</button>
+                        <button class="btn btn-number" onclick="appendNumber('2')">2</button>
+                        <button class="btn btn-number" onclick="appendNumber('3')">3</button>
+                        <button class="btn btn-equals" onclick="calculate()" rowspan="2">=</button>
+                        
+                        <button class="btn btn-number btn-zero" onclick="appendNumber('0')">0</button>
+                        <button class="btn btn-number" onclick="appendNumber('.')">.</button>
+                    </div>
+                </div>
+                <div class="calculator-history">
+                    <div class="history-header">
+                        <h3>Histórico</h3>
+                        <button onclick="clearCalculatorHistory()" class="clear-history-btn">Limpar</button>
+                    </div>
+                    <ul id="calc-history-list" class="history-list"></ul>
+                </div>
+            </section>
+
+            <!-- Converters Section -->
+            <section id="converters" class="tab-content">
+                <div class="converters-nav">
+                    <button class="converter-tab active" data-converter="temperature">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+                        </svg>
+                        Temperatura
+                    </button>
+                    <button class="converter-tab" data-converter="currency">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Moeda
+                    </button>
+                    <button class="converter-tab" data-converter="time">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Tempo
+                    </button>
+                </div>
+
+                <!-- Temperature Converter -->
+                <div id="temperature" class="converter-content active">
+                    <h2>Conversor de Temperatura</h2>
+                    <div class="converter-form">
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="number" id="temp-value" placeholder="Digite o valor" oninput="convertTemperature()">
+                        </div>
+                        <div class="form-group">
+                            <label>De:</label>
+                            <select id="temp-from" onchange="convertTemperature()">
+                                <option value="celsius">Celsius (°C)</option>
+                                <option value="fahrenheit">Fahrenheit (°F)</option>
+                                <option value="kelvin">Kelvin (K)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Para:</label>
+                            <select id="temp-to" onchange="convertTemperature()">
+                                <option value="fahrenheit">Fahrenheit (°F)</option>
+                                <option value="celsius">Celsius (°C)</option>
+                                <option value="kelvin">Kelvin (K)</option>
+                            </select>
+                        </div>
+                        <div class="result">
+                            <span id="temp-result">Resultado: --</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currency Converter -->
+                <div id="currency" class="converter-content">
+                    <h2>Conversor de Moeda</h2>
+                    <div class="converter-form">
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="number" id="currency-value" placeholder="Digite o valor" oninput="convertCurrency()">
+                        </div>
+                        <div class="form-group">
+                            <label>De:</label>
+                            <select id="currency-from" onchange="convertCurrency()">
+                                <option value="BRL">Real (BRL)</option>
+                                <option value="USD">Dólar (USD)</option>
+                                <option value="EUR">Euro (EUR)</option>
+                                <option value="GBP">Libra (GBP)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Para:</label>
+                            <select id="currency-to" onchange="convertCurrency()">
+                                <option value="USD">Dólar (USD)</option>
+                                <option value="BRL">Real (BRL)</option>
+                                <option value="EUR">Euro (EUR)</option>
+                                <option value="GBP">Libra (GBP)</option>
+                            </select>
+                        </div>
+                        <div class="result">
+                            <span id="currency-result">Resultado: --</span>
+                        </div>
+                        <p class="note">* Taxas de câmbio simuladas (1 USD = 5.0 BRL, 1 EUR = 5.5 BRL, 1 GBP = 6.3 BRL)</p>
+                    </div>
+                </div>
+
+                <!-- Time Converter -->
+                <div id="time" class="converter-content">
+                    <h2>Conversor de Tempo</h2>
+                    <div class="converter-form">
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="number" id="time-value" placeholder="Digite o valor" oninput="convertTime()">
+                        </div>
+                        <div class="form-group">
+                            <label>De:</label>
+                            <select id="time-from" onchange="convertTime()">
+                                <option value="seconds">Segundos</option>
+                                <option value="minutes">Minutos</option>
+                                <option value="hours">Horas</option>
+                                <option value="days">Dias</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Para:</label>
+                            <select id="time-to" onchange="convertTime()">
+                                <option value="minutes">Minutos</option>
+                                <option value="seconds">Segundos</option>
+                                <option value="hours">Horas</option>
+                                <option value="days">Dias</option>
+                            </select>
+                        </div>
+                        <div class="result">
+                            <span id="time-result">Resultado: --</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- To-Do List Section -->
+            <section id="todo" class="tab-content">
+                <div class="todo-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    <h2>Lista de Tarefas</h2>
+                </div>
+                <div class="todo-form">
+                    <input type="text" id="todo-input" placeholder="Adicionar nova tarefa..." onkeypress="if(event.key === 'Enter') addTodo()">
+                    <button onclick="addTodo()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Adicionar
+                    </button>
+                </div>
+                <div class="todo-filters">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="active">Pendentes</button>
+                    <button class="filter-btn" data-filter="completed">Concluídas</button>
+                </div>
+                <ul id="todo-list" class="todo-list"></ul>
+                <div class="todo-stats">
+                    <span id="todo-count">0 tarefas</span>
+                    <button onclick="clearCompleted()">Limpar Concluídas</button>
+                </div>
+            </section>
+            <!-- Password Generator Section -->
+            <section id="password" class="tab-content">
+                <div class="tool-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <h2>Gerador de Senha</h2>
+                </div>
+                <div class="password-generator">
+                    <div class="password-display">
+                        <input type="text" id="password-output" readonly>
+                        <button onclick="copyPassword()" class="copy-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="password-options">
+                        <div class="form-group">
+                            <label>Comprimento: <span id="length-value">16</span></label>
+                            <input type="range" id="password-length" min="8" max="64" value="16" oninput="updateLengthValue()">
+                        </div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-uppercase" checked>
+                                <span>Maiúsculas (A-Z)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-lowercase" checked>
+                                <span>Minúsculas (a-z)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-numbers" checked>
+                                <span>Números (0-9)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-symbols" checked>
+                                <span>Símbolos (!@#$%)</span>
+                            </label>
+                        </div>
+                        <button onclick="generatePassword()" class="generate-btn">Gerar Senha</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unit Converter Section -->
+            <section id="units" class="tab-content">
+                <div class="tool-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <h2>Conversor de Unidades</h2>
+                </div>
+                <div class="units-nav">
+                    <button class="unit-tab active" data-unit="length">Comprimento</button>
+                    <button class="unit-tab" data-unit="weight">Peso</button>
+                    <button class="unit-tab" data-unit="volume">Volume</button>
+                </div>
+                <div id="length" class="unit-content active">
+                    <h3>Conversor de Comprimento</h3>
+                    <div class="converter-form">
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="number" id="length-value" placeholder="Digite o valor" oninput="convertLength()">
+                        </div>
+                        <div class="form-group">
+                            <label>De:</label>
+                            <select id="length-from" onchange="convertLength()">
+                                <option value="m">Metros (m)</option>
+                                <option value="km">Quilômetros (km)</option>
+                                <option value="cm">Centímetros (cm)</option>
+                                <option value="mm">Milímetros (mm)</option>
+                                <option value="mi">Milhas (mi)</option>
+                                <option value="ft">Pés (ft)</option>
+                                <option value="in">Polegadas (in)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Para:</label>
+                            <select id="length-to" onchange="convertLength()">
+                                <option value="km">Quilômetros (km)</option>
+                                <option value="m">Metros (m)</option>
+                                <option value="cm">Centímetros (cm)</option>
+                                <option value="mm">Milímetros (mm)</option>
+                                <option value="mi">Milhas (mi)</option>
+                                <option value="ft">Pés (ft)</option>
+                                <option value="in">Polegadas (in)</option>
+                            </select>
+                        </div>
+                        <div class="result">
+                            <span id="length-result">Resultado: --</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="weight" class="unit-content">
+                    <h3>Conversor de Peso</h3>
+                    <div class="converter-form">
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="number" id="weight-value" placeholder="Digite o valor" oninput="convertWeight()">
+                        </div>
+                        <div class="form-group">
+                            <label>De:</label>
+                            <select id="weight-from" onchange="convertWeight()">
+                                <option value="kg">Quilogramas (kg)</option>
+                                <option value="g">Gramas (g)</option>
+                                <option value="mg">Miligramas (mg)</option>
+                                <option value="lb">Libras (lb)</option>
+                                <option value="oz">Onças (oz)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Para:</label>
+                            <select id="weight-to" onchange="convertWeight()">
+                                <option value="g">Gramas (g)</option>
+                                <option value="kg">Quilogramas (kg)</option>
+                                <option value="mg">Miligramas (mg)</option>
+                                <option value="lb">Libras (lb)</option>
+                                <option value="oz">Onças (oz)</option>
+                            </select>
+                        </div>
+                        <div class="result">
+                            <span id="weight-result">Resultado: --</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="volume" class="unit-content">
+                    <h3>Conversor de Volume</h3>
+                    <div class="converter-form">
+                        <div class="form-group">
+                            <label>Valor:</label>
+                            <input type="number" id="volume-value" placeholder="Digite o valor" oninput="convertVolume()">
+                        </div>
+                        <div class="form-group">
+                            <label>De:</label>
+                            <select id="volume-from" onchange="convertVolume()">
+                                <option value="l">Litros (L)</option>
+                                <option value="ml">Mililitros (mL)</option>
+                                <option value="gal">Galões (gal)</option>
+                                <option value="qt">Quartos (qt)</option>
+                                <option value="pt">Pintos (pt)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Para:</label>
+                            <select id="volume-to" onchange="convertVolume()">
+                                <option value="ml">Mililitros (mL)</option>
+                                <option value="l">Litros (L)</option>
+                                <option value="gal">Galões (gal)</option>
+                                <option value="qt">Quartos (qt)</option>
+                                <option value="pt">Pintos (pt)</option>
+                            </select>
+                        </div>
+                        <div class="result">
+                            <span id="volume-result">Resultado: --</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stopwatch Section -->
+            <section id="stopwatch" class="tab-content">
+                <div class="tool-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <h2>Cronômetro</h2>
+                </div>
+                <div class="stopwatch">
+                    <div class="stopwatch-display">
+                        <div id="stopwatch-time">00:00:00</div>
+                        <div id="stopwatch-ms">.000</div>
+                    </div>
+                    <div class="stopwatch-controls">
+                        <button onclick="startStopwatch()" id="start-btn" class="control-btn start-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            Iniciar
+                        </button>
+                        <button onclick="stopStopwatch()" id="stop-btn" class="control-btn stop-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="6" y="4" width="4" height="16"></rect>
+                                <rect x="14" y="4" width="4" height="16"></rect>
+                            </svg>
+                            Parar
+                        </button>
+                        <button onclick="resetStopwatch()" id="reset-btn" class="control-btn reset-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                                <path d="M3 3v5h5"></path>
+                            </svg>
+                            Reiniciar
+                        </button>
+                        <button onclick="lapStopwatch()" id="lap-btn" class="control-btn lap-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Volta
+                        </button>
+                    </div>
+                    <div class="laps-container">
+                        <h3>Volta</h3>
+                        <ul id="laps-list" class="laps-list"></ul>
+                    </div>
+                    <div class="stopwatch-history">
+                        <div class="history-header">
+                            <h3>Histórico de Sessões</h3>
+                            <button onclick="clearStopwatchHistory()" class="clear-history-btn">Limpar</button>
+                        </div>
+                        <ul id="stopwatch-history-list" class="history-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notes Section -->
+            <section id="notes" class="tab-content">
+                <div class="tool-header">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <h2>Notas</h2>
+                </div>
+                <div class="notes-app">
+                    <div class="notes-form">
+                        <input type="text" id="note-title" placeholder="Título da nota...">
+                        <textarea id="note-content" placeholder="Escreva sua nota..." rows="4"></textarea>
+                        <input type="hidden" id="note-editing-index" value="-1">
+                        <div class="notes-form-buttons">
+                            <button onclick="saveNote()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                Salvar Nota
+                            </button>
+                            <button onclick="cancelEditNote()" id="cancel-edit-btn" style="display: none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="notes-list" id="notes-list"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
