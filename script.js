@@ -26,6 +26,7 @@ let operator = null;
 let shouldResetDisplay = false;
 let calcHistory = JSON.parse(localStorage.getItem('calcHistory')) || [];
 let fullExpression = '';
+let expressionHistory = '';
 
 function updateDisplay() {
     let displayValue = currentInput;
@@ -44,15 +45,22 @@ function appendNumber(num) {
         currentInput = num;
         shouldResetDisplay = false;
         fullExpression = num;
+        expressionHistory += num;
     } else {
         if (currentInput === '0' && num !== '.') {
             currentInput = num;
             fullExpression = num;
+            if (expressionHistory === '' || expressionHistory === '0') {
+                expressionHistory = num;
+            } else {
+                expressionHistory += num;
+            }
         } else if (num === '.' && currentInput.includes('.')) {
             return;
         } else {
             currentInput += num;
             fullExpression += num;
+            expressionHistory += num;
         }
     }
     updateDisplay();
@@ -98,6 +106,7 @@ function appendOperator(op) {
     operator = op;
     shouldResetDisplay = true;
     fullExpression += op;
+    expressionHistory += op;
     updateDisplay();
 }
 
@@ -132,7 +141,7 @@ function calculate() {
 
     // Save to history (only when equals is clicked)
     calcHistory.unshift({
-        expression: fullExpression,
+        expression: expressionHistory,
         result: result,
         timestamp: new Date().toISOString()
     });
@@ -147,9 +156,11 @@ function calculate() {
 
     currentInput = result.toString();
     fullExpression = currentInput;
+    expressionHistory = currentInput;
     if (currentInput.includes('.') && currentInput.split('.')[1].length > 8) {
         currentInput = parseFloat(currentInput).toFixed(8).toString();
         fullExpression = currentInput;
+        expressionHistory = currentInput;
     }
     operator = null;
     previousInput = '';
@@ -163,6 +174,7 @@ function clearCalculator() {
     operator = null;
     shouldResetDisplay = false;
     fullExpression = '0';
+    expressionHistory = '';
     updateDisplay();
 }
 
@@ -170,9 +182,11 @@ function backspace() {
     if (currentInput.length === 1) {
         currentInput = '0';
         fullExpression = '0';
+        expressionHistory = expressionHistory.slice(0, -1);
     } else {
         currentInput = currentInput.slice(0, -1);
         fullExpression = fullExpression.slice(0, -1);
+        expressionHistory = expressionHistory.slice(0, -1);
     }
     updateDisplay();
 }
@@ -202,6 +216,7 @@ function clearCalculatorHistory() {
 function loadFromHistory(value) {
     currentInput = value.toString();
     fullExpression = value.toString();
+    expressionHistory = value.toString();
     shouldResetDisplay = true;
     updateDisplay();
 }
